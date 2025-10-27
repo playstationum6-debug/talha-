@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rümeysa'ya Sonsuz Kalp 💖</title>
+<style>
+  * {margin:0; padding:0; box-sizing:border-box;}
+  body {
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: radial-gradient(circle at top, #ff8ac9, #49005a);
+    font-family: "Poppins", sans-serif;
+    color: white;
+  }
+  canvas {
+    position:fixed;
+    top:0; left:0;
+    z-index:-1;
+  }
+  .container {
+    text-align:center;
+    z-index:10;
+    animation: fadeIn 3s ease forwards;
+  }
+  h1 {
+    font-size: 2.4em;
+    text-shadow: 0 0 15px #ffb7e8;
+    animation: glow 3s infinite alternate;
+  }
+  @keyframes glow {
+    from {text-shadow:0 0 10px #ff99cc;}
+    to {text-shadow:0 0 30px #ffb7e8;}
+  }
+  .heart {
+    width:150px;
+    height:150px;
+    background: radial-gradient(circle at 30% 30%, #ff6699, #ff1a75);
+    position:relative;
+    margin:40px auto;
+    transform: rotate(-45deg);
+    animation: pulse 1.5s infinite;
+    box-shadow:0 0 50px #ff66b2;
+  }
+  .heart::before, .heart::after {
+    content:"";
+    width:150px;
+    height:150px;
+    background: radial-gradient(circle at 30% 30%, #ff6699, #ff1a75);
+    border-radius:50%;
+    position:absolute;
+  }
+  .heart::before {top:-75px; left:0;}
+  .heart::after {top:0; left:75px;}
+  @keyframes pulse {
+    0% {transform: rotate(-45deg) scale(1);}
+    50% {transform: rotate(-45deg) scale(1.1);}
+    100% {transform: rotate(-45deg) scale(1);}
+  }
+  button {
+    background: #ff66b2;
+    border:none;
+    padding:12px 25px;
+    border-radius:25px;
+    color:white;
+    font-size:1em;
+    margin-top:20px;
+    cursor:pointer;
+    transition: all 0.3s ease;
+  }
+  button:hover {
+    background:#ff3385;
+    transform:scale(1.1);
+  }
+  @keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+  }
+  .message {
+    font-size:1.2em;
+    max-width:90%;
+    margin:20px auto;
+    line-height:1.5em;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<div class="container">
+  <h1>Rümeysa 💖</h1>
+  <div class="heart"></div>
+  <div class="message" id="text">
+    <p>“Kalbimin her atışı senin adını fısıldıyor,  
+    her nefesim seni daha çok seviyor...”</p>
+  </div>
+  <button id="next">💌 Devam Et</button>
+</div>
+
+<audio id="music" src="Eylülzede.mp3
+"></audio>
+
+<script>
+  // yıldızlı arka plan
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+  let stars = [];
+  for(let i=0; i<100; i++){
+    stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*2});
+  }
+  function animateStars(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle='white';
+    for(let s of stars){
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fill();
+      s.y += 0.3;
+      if(s.y>canvas.height) s.y=0;
+    }
+    requestAnimationFrame(animateStars);
+  }
+  animateStars();
+
+  // dokunma ile müzik
+  const music = document.getElementById("music");
+  let played = false;
+  document.getElementById("next").addEventListener("click", ()=>{
+    if(!played){
+      music.play();
+      played = true;
+    }
+    document.getElementById("text").innerHTML = `
+      <p>Sevgili Rümeysa 💕<br><br>
+      Sen gülünce dünya güzelleşiyor.<br>
+      Her şey seninle anlam buluyor.<br><br>
+      – Talha 💌</p>`;
+    document.getElementById("next").style.display = "none";
+  });
+</script>
+</body>
+</html>
